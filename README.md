@@ -1,7 +1,7 @@
 # Block Autosquash Commits Action
 
-[![CI](https://github.com/xt0rted/block-autosquash-commits-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/xt0rted/block-autosquash-commits-action/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/xt0rted/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/xt0rted/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml)
+[![CI](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml)
 
 
 A Github Action to prevent merging pull requests containing [autosquash](https://git-scm.com/docs/git-rebase#git-rebase---autosquash) commit messages.
@@ -11,6 +11,8 @@ A Github Action to prevent merging pull requests containing [autosquash](https:/
 If any commit message in the pull request starts with `fixup!` or `squash!` the check status will be set to `error`.
 
 >⚠️ GitHub's API only returns the first 250 commits of a PR so if you're working on a really large PR your fixup commits might not be detected.
+
+
 
 ## Usage
 
@@ -27,9 +29,10 @@ jobs:
 
     steps:
       - name: Block Autosquash Commits
-        uses: xt0rted/block-autosquash-commits-action@v2
+        uses: CronosUnder/block-autosquash-commits-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          mesaje-block: 'develop' into {actual-branch}'
 ```
 
 You'll also need to add a [required status check](https://help.github.com/en/articles/enabling-required-status-checks) rule for your action to block merging if it detects any `fixup!` or `squash!` commits.
@@ -56,9 +59,10 @@ jobs:
 
     steps:
       - name: Block Autosquash Commits
-        uses: xt0rted/block-autosquash-commits-action@v2
+        uses: CronosUnder/block-autosquash-commits-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          mesaje-block: 'develop' into {actual-branch}'
 ```
 
 #### Job Config
@@ -79,7 +83,8 @@ jobs:
 
     steps:
       - name: Block Autosquash Commits
-        uses: xt0rted/block-autosquash-commits-action@v2
+        uses: CronosUnder/block-autosquash-commits-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          mesaje-block: 'develop' into {actual-branch}'
 ```
