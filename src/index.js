@@ -13,11 +13,13 @@ async function runAction() {
 
 	core.startGroup("Run action : " + messaje);
 	const client = getOctokit(repoToken);
+	const pull_request_number = context.payload.pull_request.number;
+
 	const commits = await client.paginate(
 		"GET /repos/{owner}/{repo}/pulls/{pull_number}/commits",
 		{
 			...context.repo,
-			pull_number: context.issue.number,
+			pull_number: pull_request_number,
 			per_page: 100
 		}
 	);
@@ -26,7 +28,6 @@ async function runAction() {
 	const branch = process.env.GITHUB_REF.split("/").slice(2).join("/");
 	const mensaje = messaje.replace("{actual-branch}", branch);
 	let blockedCommits = 0;
-	const pull_request_number = context.payload.pull_request.number;
 	const octokit = new github.GitHub(repoToken);
 
 
