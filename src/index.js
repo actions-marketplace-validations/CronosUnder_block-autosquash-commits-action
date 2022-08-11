@@ -1,16 +1,15 @@
 const core = require("@actions/core");
-const git = require("./git");
-
 const { getContext } = require("./github/context");
-const { getOctokit } = require("@actions/github");
+const { context, getOctokit } = require("@actions/github");
 const github = require("@actions/github");
 const { info, error } = require("@actions/core");
 
 async function runAction() {
-	const context = getContext();
+	const pull_request_number = context.issue.number;
+	const repo = context.repo;
 	const repoToken = core.getInput("github_token", { required: true });
 	const messaje = core.getInput("messaje", { required: true });
-	const pull_request_number = context.payload.pull_request.number;
+	const envContext = getContext();
 
 	core.startGroup(`Run action : ${pull_request_number}` + messaje);
 	const client = getOctokit(repoToken);
@@ -18,7 +17,7 @@ async function runAction() {
 	const commits = await client.paginate(
 		"GET /repos/{owner}/{repo}/pulls/{pull_number}/commits",
 		{
-			...context.repo,
+			...repo,
 			pull_number: pull_request_number,
 			per_page: 100
 		}
@@ -41,7 +40,7 @@ async function runAction() {
 			error(`Commit ${sha} is an blocked commit: ${url}`);
 			blockedCommits += 1;
 			await octokit.issues.createComment({
-				...context.repo,
+				...envContext.repo,
 				issue_number: pull_request_number,
 				body: `Commit ${sha} is an blocked commit: ${mensaje}`
 			});
