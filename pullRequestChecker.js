@@ -5,8 +5,9 @@ const {
 } = require("@actions/github");
 
 class PullRequestChecker {
-    constructor(repoToken) {
+    constructor(repoToken, mesajeBlock) {
         this.client = getOctokit(repoToken);
+        this.mesajeBlock = mesajeBlock;
     }
 
     async process() {
@@ -23,15 +24,13 @@ class PullRequestChecker {
 
         let blockedCommits = 0;
         for (const { commit: { message }, sha, url } of commits) {
-            const isAutosquash = message.startsWith("fixup!") || message.startsWith("squash!");
+            const isAutosquash = message == mesajeBlock;
 
             if (isAutosquash) {
-                error(`Commit ${sha} is an autosquash commit: ${url}`);
-
+                error(`Commit ${sha} is an blocked commit: ${url}`);
                 blockedCommits++;
             }
         }
-
         if (blockedCommits) {
             throw Error(`${blockedCommits} commit(s) need to be squashed`);
         }
