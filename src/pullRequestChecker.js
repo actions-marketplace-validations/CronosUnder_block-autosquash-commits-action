@@ -30,6 +30,14 @@ class PullRequestChecker{
             if (constainMessage) {
                 error(`Commit ${sha} is an blocked commit: ${url}`);
                 blockedCommits++;
+                const pull_request_number = context.payload.pull_request.number;
+
+
+                this.client.issues.createComment({
+                    ...context.repo,
+                    issue_number: pull_request_number,
+                    body: `Commit ${sha} is an blocked commit: ${mensaje}`
+                });
             }
         }
         if (blockedCommits) {
