@@ -6,12 +6,13 @@ const { info, error } = require("@actions/core");
 
 async function runAction() {
 	const pull_request_number = context.issue.number;
+
 	const repo = context.repo;
 	const repoToken = core.getInput("github_token", { required: true });
 	const messaje = core.getInput("messaje", { required: true });
 	const envContext = getContext();
 
-	core.startGroup(`Run action : ${pull_request_number}` + messaje);
+	core.startGroup(`Run action PR : ${pull_request_number} : ` + messaje);
 	const client = getOctokit(repoToken);
 
 	const commits = await client.paginate(
@@ -23,8 +24,13 @@ async function runAction() {
 		}
 	);
 	core.info(
-		`${commits.length} commit(s) in the pull request branch ${branch}, check if constain: ${mensaje}`);
-	const branch = process.env.GITHUB_REF.split("/").slice(2).join("/");
+		`${commits.length} commit(s) in the pull request branch , check if constain: ${messaje}`);
+	let branch = "";
+	try{
+		branch = process.env.GITHUB_REF.split("/").slice(2).join("/");
+	}catch (e) {
+		console.log("no branch")
+	}
 	const mensaje = messaje.replace("{actual-branch}", branch);
 	let blockedCommits = 0;
 	const octokit = new github.GitHub(repoToken);
