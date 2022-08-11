@@ -12,7 +12,6 @@ async function runAction() {
 	const messaje = core.getInput("messaje", { required: true });
 
 	core.startGroup("Run action : " + messaje);
-	git.checkOutRemoteBranch(context);
 	const client = getOctokit(repoToken);
 	const commits = await client.paginate(
 		"GET /repos/{owner}/{repo}/pulls/{pull_number}/commits",
