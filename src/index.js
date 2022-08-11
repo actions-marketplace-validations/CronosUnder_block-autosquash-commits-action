@@ -8,7 +8,7 @@ const { info, error } = require("@actions/core");
 
 async function runAction() {
 	const context = getContext();
-	const repoToken = core.getInput("repo-token", { required: true });
+	const repoToken = core.getInput("github_token", { required: true });
 	const messaje = core.getInput("messaje", { required: true });
 	const gitName = core.getInput("git_name", { required: true });
 	const gitEmail = core.getInput("git_email", { required: true });

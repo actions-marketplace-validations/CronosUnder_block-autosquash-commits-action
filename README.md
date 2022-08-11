@@ -30,7 +30,7 @@ jobs:
       - name: Block Autosquash Commits
         uses: CronosUnder/block-autosquash-commits-action@v1.0.3
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           messaje: "develop' into {actual-branch}"
 ```
 
@@ -65,7 +65,7 @@ jobs:
       - name: Block Autosquash Commits
         uses: CronosUnder/block-autosquash-commits-action@v2
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           messaje: 'develop' into {actual-branch}'
 ```
 
@@ -94,6 +94,6 @@ jobs:
       - name: Block Autosquash Commits
         uses: CronosUnder/block-autosquash-commits-action@v2
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           messaje: 'develop' into {actual-branch}'
 ```
