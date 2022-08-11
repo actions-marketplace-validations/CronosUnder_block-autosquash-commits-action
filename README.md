@@ -13,22 +13,25 @@ If any commit message in the pull request starts with `sender message` the check
 ## Usage
 
 ```yaml
-on: pull_request
+on:
+  pull_request:
+    # Sequence of patterns matched against refs/heads
+    branches-ignore:
+      - '**-DEV'
+      - '**-dev'
 
 name: Pull Requests
 
 jobs:
   message-check:
-    name: Block Autosquash Commits
-
+    name: Block Message Commits
     runs-on: ubuntu-latest
-
     steps:
       - name: Block Autosquash Commits
-        uses: CronosUnder/block-autosquash-commits-action@v2
+        uses: CronosUnder/block-autosquash-commits-action@v1.0.3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          mesaje-block: 'develop' into {actual-branch}'
+          messaje: "develop' into {actual-branch}"
 ```
 
 You'll also need to add a [required status check](https://help.github.com/en/articles/enabling-required-status-checks) rule for your action to block merging if it detects any `fixup!` or `squash!` commits.
@@ -40,9 +43,14 @@ If your repository is using [control permissions](https://github.blog/changelog/
 #### Workflow Config
 
 ```yaml
-on: pull_request
+on:
+  pull_request:
+    # Sequence of patterns matched against refs/heads
+    branches-ignore:
+      - '**-DEV'
+      - '**-dev'
 
-name: Pull Request
+name: Pull Requests
 
 permissions:
   pull-requests: read
@@ -58,15 +66,20 @@ jobs:
         uses: CronosUnder/block-autosquash-commits-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          mesaje-block: 'develop' into {actual-branch}'
+          messaje: 'develop' into {actual-branch}'
 ```
 
 #### Job Config
 
 ```yaml
-on: pull_request
+on:
+  pull_request:
+    # Sequence of patterns matched against refs/heads
+    branches-ignore:
+      - '**-DEV'
+      - '**-dev'
 
-name: Pull Request
+name: Pull Requests
 
 jobs:
   message-check:
@@ -82,5 +95,5 @@ jobs:
         uses: CronosUnder/block-autosquash-commits-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          mesaje-block: 'develop' into {actual-branch}'
+          messaje: 'develop' into {actual-branch}'
 ```

@@ -1,19 +1,20 @@
 {
 	"name": "block-develop-commits-action",
-	"private": true,
-	"main": "./dist/index.js",
+  "license": "MIT",
+  "private": true,
+  "main": "./dist/index.js",
 	"scripts": {
-		"test": "npm run lint",
+		"test": "jest",
 		"lint": "eslint --max-warnings 0 \"**/*.js\"",
 		"lint:fix": "yarn lint --fix",
 		"format": "prettier --list-different \"**/*.{css,html,js,json,jsx,less,md,scss,ts,tsx,vue,yaml,yml}\"",
 		"format:fix": "yarn format --write",
 		"build": "ncc build ./src/index.js"
 	},
-	"license": "MIT",
 	"dependencies": {
 		"@actions/core": "^1.9.1",
 		"@actions/github": "^5.0.3",
+		"command-exists": "^1.2.9",
 		"parse-diff": "^0.9.0"
 	},
 	"peerDependencies": {},
