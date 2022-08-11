@@ -1,18 +1,14 @@
 # Block Autosquash Commits Action
 
-[![CI](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml)
-
+[![CI](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/ci.yml) [![CodeQL](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/CronosUnder/block-autosquash-commits-action/actions/workflows/codeql-analysis.yml)
 
 A Github Action to prevent merging pull requests containing [autosquash](https://git-scm.com/docs/git-rebase#git-rebase---autosquash) commit messages.
 
 ## How it works
 
-If any commit message in the pull request starts with `fixup!` or `squash!` the check status will be set to `error`.
+If any commit message in the pull request starts with `sender message` the check status will be set to `error`.
 
->⚠️ GitHub's API only returns the first 250 commits of a PR so if you're working on a really large PR your fixup commits might not be detected.
-
-
+> ⚠️ GitHub's API only returns the first 250 commits of a PR so if you're working on a really large PR your fixup commits might not be detected.
 
 ## Usage
 

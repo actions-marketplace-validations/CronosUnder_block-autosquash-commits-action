@@ -9,11 +9,15 @@ inputs:
   repo-token:
     description: "Token for the repo. Can be passed in using {{ secrets.GITHUB_TOKEN }}"
     required: true
-  
+
   mesaje-block:
     description: "Mensaje que se buscara en los commit para bloquear"
     required: true
 
+#runs:
+#  using: "docker"
+#  image: "Dockerfile"
+
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: node16
+  main: ./dist/index.js
