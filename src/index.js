@@ -10,11 +10,8 @@ async function runAction() {
 	const context = getContext();
 	const repoToken = core.getInput("github_token", { required: true });
 	const messaje = core.getInput("messaje", { required: true });
-	const gitName = core.getInput("git_name", { required: true });
-	const gitEmail = core.getInput("git_email", { required: true });
 
 	core.startGroup("Run action : " + messaje);
-	git.setUserInfo(gitName, gitEmail);
 	git.checkOutRemoteBranch(context);
 	const client = getOctokit(repoToken);
 	const commits = await client.paginate(
