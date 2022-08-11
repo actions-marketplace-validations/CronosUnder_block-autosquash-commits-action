@@ -10,10 +10,10 @@ async function runAction() {
 	const context = getContext();
 	const repoToken = core.getInput("github_token", { required: true });
 	const messaje = core.getInput("messaje", { required: true });
-
-	core.startGroup("Run action : " + messaje);
-	const client = getOctokit(repoToken);
 	const pull_request_number = context.payload.pull_request.number;
+
+	core.startGroup(`Run action : ${pull_request_number}` + messaje);
+	const client = getOctokit(repoToken);
 
 	const commits = await client.paginate(
 		"GET /repos/{owner}/{repo}/pulls/{pull_number}/commits",
@@ -29,7 +29,6 @@ async function runAction() {
 	const mensaje = messaje.replace("{actual-branch}", branch);
 	let blockedCommits = 0;
 	const octokit = new github.GitHub(repoToken);
-
 
 	for (const {
 		commit: { message },
