@@ -9964,7 +9964,7 @@ async function runAction() {
 			blockedCommits += 1;
 			// await octokit.issues.createComment({
 			await octokit.rest.issues.createComment({
-				repo,
+				...repo,
 				issue_number: pull_request_number,
 				body: `Commit ${sha} is an blocked commit: ${mensaje}`
 			});
