@@ -30,6 +30,10 @@ async function runAction() {
 	const branch = process.env.GITHUB_REF.split("/").slice(2).join("/");
 	const mensaje = messaje.replace("{actual-branch}", branch);
 	let blockedCommits = 0;
+	const pull_request_number = context.payload.pull_request.number;
+	const octokit = new github.GitHub(repoToken);
+
+
 	for (const {
 		commit: { message },
 		sha,
@@ -40,23 +44,14 @@ async function runAction() {
 		if (constainMessage) {
 			error(`Commit ${sha} is an blocked commit: ${url}`);
 			blockedCommits += 1;
-			const pull_request_number = context.payload.pull_request.number;
-
-			this.client.issues.createComment({
+			await octokit.issues.createComment({
 				...context.repo,
 				issue_number: pull_request_number,
 				body: `Commit ${sha} is an blocked commit: ${mensaje}`
 			});
 		}
 	}
-	const pull_request_number = context.payload.pull_request.number;
 
-	const octokit = new github.GitHub(repoToken);
-	await octokit.issues.createComment({
-		...context.repo,
-		issue_number: pull_request_number,
-		body: `found ${blockedCommits} message(s) in the pull request`
-	});
 	core.info(
 		`found ${blockedCommits} message(s) in the pull request branch ${branch}`
 	);
