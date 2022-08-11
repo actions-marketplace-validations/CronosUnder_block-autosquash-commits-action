@@ -19,12 +19,12 @@ class PullRequestChecker {
                 per_page: 100,
             },
         );
-
-        debug(`${commits.length} commit(s) in the pull request`);
-
+        const branch = process.env.GITHUB_REF.split('/').slice(2).join('/')
+        debug(`${commits.length} commit(s) in the pull request branch ${branch}`);
+        const mensaje = mesajeBlock.replace('{actual-branch}',branch)
         let blockedCommits = 0;
         for (const { commit: { message }, sha, url } of commits) {
-            const isAutosquash = message == mesajeBlock;
+            const isAutosquash = message.includes(mensaje);
 
             if (isAutosquash) {
                 error(`Commit ${sha} is an blocked commit: ${url}`);
